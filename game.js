@@ -1,7 +1,3 @@
-// garageserver.io is a multiplayer framework that takes in
-// client inputs, updates object states, and broadcasts new states.
-// It handles client side prediction, interpolation, reconciliation.
-var garageServer = require('./lib/garageserver/garageserver.io');
 var gamePhysics = require('./shared/core');
 
 // module.exports is what is returned if some other file require() this file.
@@ -10,27 +6,18 @@ var gamePhysics = require('./shared/core');
 exports = module.exports = Game;
 
 function Game (sockets) {
-  this.physicsInterval = 15;
-  this.physicsDelta = this.physicsInterval / 1000;
-  this.physicsIntervalId = 0;
-
-  this.gameServer = garageServer.createGarageServer(sockets, 
-      {
-        logging: true,
-        interpolation: true,
-        clientSidePrediction: true,
-        smoothingFactor: 0.3,
-        interpolationDelay: 50
-      });
+  this.updateInterval = 20;
+  this.broadcastInterval = 100;
 }
 
 Game.prototype.start = function () {
   var self = this;
-  this.physicsIntervalId = setInterval(
-                               function() { self.update(); }, 
-                               this.physicsInterval
-                           );
-  this.gameServer.start();
+  setInterval( function() { self.update(); }, 
+               self.updateInterval
+             );
+  setInterval( function() { self.broadcast(); }, 
+               self.broadcastInterval
+             );
 };
 
 // Update loop
@@ -39,30 +26,14 @@ Game.prototype.start = function () {
 // Entities are any objects with state that will be simulated by server (e.g. projectiles).
 // Players are special types of entities that can receive input from client.
 Game.prototype.update = function () {
-  // ---- update players ----
-  var players = this.gameServer.getPlayers(),
-      entities = this.gameServer.getEntities(),
-      self = this;
+  // process client inputs
 
-  players.forEach(function (player) {
-    var newState = gamePhysics.getNewPlayerState(
-                          player.state,
-                          player.inputs,
-                          self.physicsDelta,
-                          self.gameServer);
-    self.gameServer.updatePlayerState(player.id, newState);
-  });
+  // run physics logic
 
-  // ---- update Entities ----
-  for (var i = entities.length - 1; i >= 0; i--) {
-    var entity = entities[i],
-      newState = gamePhysics.getNewEntityState(entity.state, self.physicsDelta);
+  // run game logic
 
-    self.gameServer.updateEntityState(entity.id, newState);
-    // if (newState.x < -200 || newState.y < -200 || newState.x > 2000 || newState.y > 2000) {
-    //   self.gameServer.removeEntity(entity.id);
-    // } else {
-    //   self.gameServer.updateEntityState(entity.id, newState);
-    // }
-  }
+  // update game state
 };
+
+Game.prototype.broadcast = function () {
+}

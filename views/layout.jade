@@ -2,13 +2,16 @@ doctype html
 html
   head
     title= title
-    //- link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='/socket.io/socket.io.js')
-    script(src='garageserver.io.js')
-    script(src='/javascripts/jquery-2.0.0.min.js')
-    script(src='/javascripts/keyboard.min.js')
-    script(src='/javascripts/gameloop.js')
-    script(src='core.js')
-    script(src='/javascripts/game.js')
+    script(src='/js/vendor/jquery-2.0.0.min.js')
+    script(src='/js/vendor/phaser.min.js')
+    
+    script(src='/js/lib/module.js')
+    
+    script(src='/js/entity/player.js')
+    script(src='/js/game/game-manager.js')
+    script(src='/js/game/game.js')
+    
+    script(src='/js/main.js')
   body
     block content
