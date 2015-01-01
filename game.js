@@ -1,6 +1,12 @@
+// garageserver.io is a multiplayer framework that takes in
+// client inputs, updates object states, and broadcasts new states.
+// It handles client side prediction, interpolation, reconciliation.
 var garageServer = require('./lib/garageserver/garageserver.io');
 var gamePhysics = require('./shared/core');
 
+// module.exports is what is returned if some other file require() this file.
+// So assigning Game to module.exports means Game will be exposed and returned
+// when some other file does require(game.js).
 exports = module.exports = Game;
 
 function Game (sockets) {
@@ -13,7 +19,8 @@ function Game (sockets) {
         logging: true,
         interpolation: true,
         clientSidePrediction: true,
-        smoothingFactor: 0.2
+        smoothingFactor: 0.3,
+        interpolationDelay: 50
       });
 }
 
@@ -26,6 +33,11 @@ Game.prototype.start = function () {
   this.gameServer.start();
 };
 
+// Update loop
+// -----------
+// Advance player and entity states based on any new inputs.
+// Entities are any objects with state that will be simulated by server (e.g. projectiles).
+// Players are special types of entities that can receive input from client.
 Game.prototype.update = function () {
   // ---- update players ----
   var players = this.gameServer.getPlayers(),

@@ -1,0 +1,13 @@
+{
+  "name": "sad-griffin",
+  "description": "trajectory game",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.10.6",
+    "jade": "^1.8.2"
+  }
+}
