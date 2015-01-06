@@ -1,10 +1,5 @@
 var gamePhysics = require('./shared/core');
 
-// module.exports is what is returned if some other file require() this file.
-// So assigning Game to module.exports means Game will be exposed and returned
-// when some other file does require(game.js).
-exports = module.exports = Game;
-
 function Game (sockets) {
   this.updateInterval = 20;
   this.broadcastInterval = 100;
@@ -37,3 +32,8 @@ Game.prototype.update = function () {
 
 Game.prototype.broadcast = function () {
 }
+
+// module.exports is what is returned if some other file require() this file.
+// So assigning Game to module.exports means Game will be exposed and returned
+// when some other file does require(game.js).
+exports = module.exports = Game;

@@ -1,5 +1,4 @@
 mPlayer = require('../entity/player')
-mGameManager = require('./game-manager')
 Phaser = require('../vendor/phaser.min.js')
 
 class Game
@@ -9,13 +8,11 @@ class Game
 
   initialize: ->
     # Phaser game instance
-    console.log Phaser
     @game = new Phaser.Game(800, 600, 
                          Phaser.AUTO, 
                          '')
 
     @player = new mPlayer.Player
-    @gameLoopManager = new mGameManager.GameLoopManager(@updateState);
     
     # main Phaser state
     playState =
@@ -38,9 +35,6 @@ class Game
     @game.state.start('play')
 
   # main udpate loop for game
-  # this is handed off to GameLoopManager, which might
-  # call this multiple times during one phaser update() call
-  # if phaser update() time delta falls behind
   updateState: ->
   
 
