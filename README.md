@@ -5,4 +5,4 @@ this will install all dependencies. do this after every pull to make sure everyt
 > npm install
 
 to start server.
-> gulp start
+> gulp serve
