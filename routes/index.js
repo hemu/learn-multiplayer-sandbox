@@ -1,3 +1,3 @@
 exports.index = function(req, res){
-  res.render('index', { title: 'Pong' });
+  res.render('index', { title: 'Multiplayer Sandbox' });
 };
