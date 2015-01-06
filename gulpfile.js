@@ -55,6 +55,5 @@ gulp.task('server', function () {
 
 gulp.task('serve', [
   'javascript',
-  'server',
-  'open'
+  'server'
 ]);

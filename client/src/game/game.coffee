@@ -26,8 +26,8 @@ class Game
                                    'logo')
         logo.anchor.setTo 0.5, 0.5
 
-      update: => 
-        @gameLoopManager.update()
+      update: =>
+        
 
     @game.state.add 'play', playState
 
